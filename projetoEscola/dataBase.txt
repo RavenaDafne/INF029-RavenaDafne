@@ -1,0 +1,10 @@
+Student: 4; 23; 8; 11; 2000; F; RUTY CERQUEIRA; 28396446067
+Student: 2; 43; 5; 12; 1980; M; Matheus Trindade; 05869357543
+Student: 3; 39; 6; 2; 1985; F; ELISA QUEIROZ; 31707956006
+Teacher: 3; 38; 5; 10; 1985; M; Carlos; 20391563050
+Teacher: 2; 29; 8; 8; 1994; F; Bruna Soares; 41212279050
+Subject: 4; 12; 0; 0; Artes;
+Subject: 5; 1; 1; 1; Ciencias; 1
+Subject: 5; 1; 0; 0; Historia;
+Subject: 6; 1; 0; 0; Ingles;
+Subject: 8; 1; 1; 0; Ingles; 2

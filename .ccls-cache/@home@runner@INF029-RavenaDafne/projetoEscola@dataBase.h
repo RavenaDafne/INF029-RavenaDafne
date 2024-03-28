@@ -3,9 +3,9 @@
 #include "person.h"
 #include "subject.h"
 
-#define MAX_STUDENTS 4
-#define MAX_TEACHERS 3
-#define MAX_SUBJECTS 4
+#define MAX_STUDENTS 200
+#define MAX_TEACHERS 20
+#define MAX_SUBJECTS 10
 
 typedef struct DataBase{
     Person students[MAX_STUDENTS];
@@ -15,6 +15,9 @@ typedef struct DataBase{
     int teachersCount;
     int subjectsCount;
 } DataBase;
+
+void saveDataBaseToFile(DataBase *db, const char* arqDados);
+void readDataBaseFromFile(DataBase *db, const char* arqDados);
 
 
 #endif

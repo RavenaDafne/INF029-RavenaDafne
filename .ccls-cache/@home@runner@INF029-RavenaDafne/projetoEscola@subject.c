@@ -61,7 +61,11 @@ void addTeacherToSubject(Subject* subject, Person* teachers, int* numberOfTeache
     printf("Deseja cadastrar um professor para esta disciplina? (1 - Sim, 0 - Não): ");
     scanf("%d", &choice);
     cleanStream();
+  
     if(choice == 1){
+      printf("=================================\n");
+      printf("Lista de Professores Disponíveis:\n");
+      listPersons(teachers, *numberOfTeachers);
       getRegistration(&regist);
       if(getPersonByRegist(teachers, *numberOfTeachers, regist) != NULL){
         subject->teacherRegist = regist;
@@ -243,7 +247,7 @@ void listSubjects(Subject* subjects, int numberOfSubjects, Person* teachers, int
   for(int i = 0; i < numberOfSubjects; i++){
     printf("Disciplina %d:\n", i + 1);
     printf("Nome: %s\n", subjects[i].name);
-    printf("Codigo: %d\n", subjects->code);
+    printf("Codigo: %d\n", subjects[i].code);
     printf("Periodo: %d\n", subjects[i].period);
     Person* teacher = getPersonByRegist(teachers, numberOfTeachers, subjects[i].teacherRegist);
     if(teacher != NULL){

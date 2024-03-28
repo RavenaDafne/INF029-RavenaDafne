@@ -7,7 +7,7 @@ typedef struct DataBase DataBase;
 #ifndef SUBJECT_H
 #define SUBJECT_H
 
-#define MAX_STUDENTS_CLASS 4
+#define MAX_STUDENTS_CLASS 40
 
 typedef struct Subject{
     char name[MAX_LETTERS];
@@ -32,6 +32,7 @@ void listSubjects(Subject* subjects, int numberOfSubjects, Person* teachers, int
 void listOneSubjectData(Subject* subject, DataBase *db);
 void listStudentsEnrolledInLessThanThreeSubjects(const DataBase *db);
 void listSubjectsExceedingCapacity(const DataBase *db);
+
 
 void setPeriod(int* period);
 void setCode(int* code);

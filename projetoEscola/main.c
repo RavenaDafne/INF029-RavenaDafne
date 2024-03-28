@@ -260,8 +260,8 @@ void mainMenu(DataBase *db){
 
 int main() {
   DataBase dataBase = {.studentsCount = 0, .teachersCount = 0, .subjectsCount = 0};
-
+  readDataBaseFromFile(&dataBase, "dataBase.txt");
   mainMenu(&dataBase);
-
+  saveDataBaseToFile(&dataBase, "dataBase.txt");
   return 0;
 }

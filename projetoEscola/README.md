@@ -25,7 +25,7 @@ Para compilar o projeto, siga os passos abaixo:
 2. Execute o comando de compilação:
 
     ```bash
-    gcc main.c person.c utils.c subject.c -Wno-unused-result -o projeto && ./projeto
+    gcc main.c dataBase.c person.c utils.c subject.c -Wno-unused-result -o projeto && ./projeto
     ```
 
 ## Funcionalidades

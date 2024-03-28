@@ -15,7 +15,5 @@ void showTime(void);
 int getActualMonth(void);
 
 bool validateName(char* name);
-bool validateCode(const int code);
-bool validatePeriod(int period);
 void setName(char* name);
 #endif // UTILS_H
