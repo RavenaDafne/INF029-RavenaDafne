@@ -12,7 +12,7 @@ const char FORMAT_SUBJECT_READ[] = "Subject: %d; %d; %d; %d; %[^;];";
 const char FORMAT_SUBJECT_WRITE[] = "Subject: %d; %d; %d; %d; %s;";
 
 //ISSO É PRA LER O ARQUIVO DE DADOS  // o ponteiro file vai apontar para o arquivo de dados por meio da funcao fopen
-//(caminhoDoArquivo/nomeDoArquivo.txt  ou nomeDoArquivo.txt(cria o arq no diretorio onde ta o programa em c esta, arq.fonte) e depois o modo de acesso ao arquivo(6 letras: r-read, w-write, a-append, r+, w+, a+)
+//(caminhoDoArquivo\\nomeDoArquivo.txt  ou nomeDoArquivo.txt(cria o arq no diretorio onde ta o programa em c esta, arq.fonte) e depois o modo de acesso ao arquivo(6 letras: r-read, w-write, a-append, r+, w+, a+)
 void readDataBaseFromFile(DataBase *db, const char* arqDados){
 
   FILE *file = fopen(arqDados, "r");

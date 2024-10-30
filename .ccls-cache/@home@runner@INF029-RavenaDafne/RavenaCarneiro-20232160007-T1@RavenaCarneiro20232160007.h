@@ -1,5 +1,28 @@
-#ifndef TRABALHO1_RAVENACARNEIRO20232160007_H
-#define TRABALHO1_RAVENACARNEIRO20232160007_H
+// #################################################
+//  Instituto Federal da Bahia
+//  Salvador - BA
+//  Curso de Análise e Desenvolvimento de Sistemas http://ads.ifba.edu.br
+//  Disciplina: INF029 - Laboratório de Programação
+//  Professor: Renato Novais - renato@ifba.edu.br
+
+//  ----- Orientações gerais -----
+//  Descrição: esse arquivo deve conter as questões do trabalho do aluno.
+//  Cada aluno deve renomear esse arquivo para Aluno<MATRICULA>.c
+//  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
+
+//  ----- Dados do Aluno -----
+//  Nome:
+//  email:
+//  Matrícula:
+//  Semestre:
+
+//  Copyright © 2016 Renato Novais. All rights reserved.
+// Última atualização: 07/05/2021
+
+// #################################################
+#ifndef RavenaCarneiro20232160007_H
+#define RavenaCarneiro20232160007_H
+
 
 typedef struct DQ
 {
@@ -29,4 +52,4 @@ int q5(int num);
 int q6(int numerobase, int numerobusca);
 DataQuebrada quebraData(char data[]);
 
-#endif  // TRABALHO1_RAVENACARNEIRO20232160007_H
+#endif  // RavenaCarneiro20232160007_H

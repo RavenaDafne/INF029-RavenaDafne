@@ -6,10 +6,8 @@
 
 O Projeto Escola é um sistema de cadastro (CRUD) desenvolvido com o objetivo de gerenciar estudantes, professores e disciplinas, estabelecendo relações entre eles. Além disso, possibilita a geração de relatórios simples, sendo executado em um terminal.
 
-## Colaboradores
+## Colaborador
 
-- Maria Vitória Santos da Silva
-- Raphael de Jesus Gramosa (@Gramosa)
 - Ravena Dafne Costa Carneiro (@RavenaDafne)
 
 ## Compilação

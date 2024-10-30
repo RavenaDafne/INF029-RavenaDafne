@@ -35,106 +35,80 @@ Para compilar o projeto, siga os passos abaixo:
 2. Execute o comando de compilação:
 
     ```bash
-    gcc RavenaCarneiro20232160007.c corretor.c -Wno-unused-result -o t1 && ./t1
+    gcc RavenaCarneiro20232160007.c novoCorretor.c -Wno-unused-result -o t1 && ./t1
+    ```
+   ```bash
+   gcc RavenaCarneiro20232160007-Q7.c -Wno-unused-result -o t1 && ./t1
+   ```
+    ```bash
+    gcc RavenaCarneiro20232160007-Q8.c -Wno-unused-result -o t1 && ./t1
     ```
 
-## Funcionalidades
+## Lista
 
-### Cadastro de Pessoas (alunos e professores)
+### 01 Questões
+Faça um programa que valide uma data informada formato dd/mm/aaaa (d/m/aa, d/m/aaaa). As
+seguintes datas são válidas: 02/03/2015, 12/1/15, 1/9/2016. Considere ano bissexto.
 
-- Criar, editar e excluir.
-- Validação de campos como:
-  - Nome: Capitalização automática, caracteres alfabéticos, ausência de espaços duplicados ou no início da palavra, entre outros.
-  - Matrícula: Valores positivos não nulos, não repetição de matrículas já cadastradas, etc.
-  - CPF: Verificação dos dígitos verificadores através de cálculo matemático, exemplos de CPFs válidos: 12345678909, 06077218049, 56040728000, entre outros.
-  - Sexo: Capitalização automática (ex: 'm' ou 'M' são aceitos).
-  - Data de nascimento: Coleta em formato dd/mm/aaaa, validação de limites (inclusive anos bissextos).
-  - Idade (calculada através da data de nascimento): Validação de limites (idade mínima 5 anos e máxima 120 anos), entre outros.
+### 02 Questões
+Faça um programa em que o usuário informa a sua data de aniversário, o programa deve:
+a) Verificar se a data é válida (usar função da questão anterior);
+b) Quantidade de anos, meses, e dias, até a data atual.
 
-### Cadastro de Matérias
+### 03 Questões
+Faça um programa que o usuário informa um texto de até 250, e uma letra. O programa deve
+informar quantas vezes essa letra aparece no texto. Desconsidere acentos nas vogais. Ou seja, um
+'á' é igual a 'a'.
 
-- Criar, editar e excluir.
-- Validação de campos como:
-  - Nome: Mesmos critérios de validação utilizados para Pessoas.
-  - Código e semestre: Positivos e não nulos.
-  - Professor e Aluno: Cadastro de pessoas existentes e não cadastradas na respectiva matéria.
+### 04 Questões
+Faça um programa em que o usuário informa um texto de até 250, e uma palavra. O
+programa deve informar a posição inicial e fim de todas as ocorrências da palavra no texto.
 
-### Emissão de Relatórios
+### 05 Questões(ok)
+Faça uma função que permita inverter um número inteiro N. Ex:
+• 456 – 654
+• 5430 – 345
+• 100 – 1
 
-Além das funcionalidades de cadastro, o sistema permite a emissão de alguns relatórios.
+### 06 Questões (ok)
+Escreva uma função que determine quantas vezes um número K (de qualquer quantidade de
+dígitos) ocorre em um número natural N. Por exemplo:
+• O número 3 ocorre quatro vezes em 3539343.
+• O número 44 ocorre uma vez em 5444, e duas vezes em 54444
+• O número 23 ocorre duas vezes em 1234562354
 
-###                                     Menus do Projeto 
+### 07 Questões
+Fazer um programa que implementa o jogo da velha.
+a) O programa deve sempre mostrar o tabuleiro do jogo da velha, com o jogador que deve
+jogar, da seguinte forma:
+Jogador 2, informe sua jogada:
+b) Cada jogador (jogador 1 e jogador 2) terá sua vez de jogar. O jogador um tem a marca “X” e o
+jogador 2 a marca “0”.
+c) O jogador deve informar a célula de interesse: ex: B3. O programa deve verificar se é uma
+célula válida
+d) O programa deve informar qual foi o ganhador, ou se não houve ganhador
 
-Este é o ponto de entrada do sistema. Ele permite que o usuário acesse as diferentes funcionalidades disponíveis.
-
-|             Menu Principal          |
-|-------------------------------------|
-|  0 - Sair                           |
-|  1 - Cadastro de Aluno              |
-|  2 - Cadastro de Professor          |
-|  3 - Cadastro de Disciplina         |
-|  4 - Relatórios                     |
-=======================================
-
-Cadastro de Aluno
-
-Neste menu, o usuário pode realizar operações relacionadas aos alunos.
-
-=======================================
-|        Cadastro de Aluno            |
-|-------------------------------------|
-|  0 - Voltar                         |
-|  1 - Cadastrar Aluno                |
-|  2 - Atualizar Aluno                |
-|  3 - Excluir Aluno                  |
-=======================================
-
-Cadastro de Professor
-
-Aqui, o usuário pode gerenciar os professores cadastrados.
-
-
-|       Cadastro de Professor         |
-|-------------------------------------|
-|  0 - Voltar                         |
-|  1 - Cadastrar Professor            |
-|  2 - Atualizar Professor            |
-|  3 - Excluir Professor              |
-=======================================
-
-
-Cadastro de Disciplina
-
-Este menu permite operações relacionadas às disciplinas.Cadastro de disciplina, professor e aluno na disciplina.
-
-|      Cadastro de Disciplina         |
-|-------------------------------------|
-|  0 - Voltar                         |
-|  1 - Cadastrar Disciplina           |
-|  2 - Atualizar Disciplina           |
-|  3 - Excluir Disciplina             |
-=======================================
-
-
-Relatórios
-
-Neste menu, o usuário pode gerar diversos relatórios,listagens e filtragens com base nos dados armazenados.
-
-|             Relatórios                 |
-|----------------------------------------|
-|  0 - Voltar                            |
-|  1 - Listar Alunos                     |
-|  2 - Listar Professores                |
-|  3 - Listar Disciplinas                |
-|  4 - Listar uma Disciplina             |
-|  5 - Listar Alunos por Sexo            |
-|  6 - Listar Alunos por Nome            |
-|  7 - Listar Alunos por Data Nasc.      |
-|  8 - Listar Professores por Sexo       |
-|  9 - Listar Professores por Nome       |
-| 10 - Listar Professores por Data Nasc. |
-| 11 - Aniversariantes do Mês            |
-| 12 - Lista de pessoas (professor/aluno)|
-| 13 - Lista de Alunos < 3 Disciplinas   | 
-| 14 - Lista de Disciplinas > 40 Vagas   |
-=========================================
+### 08 Questões
+Faça um programa que implemente o jogo de batalha naval.
+Ver o jogo em http://www.ludijogos.com/multiplayer/batalha-naval/
+a) O número de navios de guerra deve ser um parâmetro global. Precisando aumentar a
+quantidade de navios, o programador deve apenas mudar esse valor. b) Deve ter pelo menos 1
+barco de tamanho 4, 1 de tamanho 3, 3 barcos de tamanho 1. Os demais barcos, se existirem
+devem ser obrigatoriamente de tamanho 2. Desta forma, o número mínimo de barco é: 5 barcos.
+c) O tabuleiro de cada jogador deve ser uma matriz 10 x 10. d) Cada jogador, no início do
+jogo deve dizer onde vai posicionar, cada um dos seus barcos. O programa deve controlar se os
+barcos estão posicionados de forma correta e) Use a seguinte configuração para representar o
+mapa:
+i. [ ] espaço em branco -> posição do mar sem nada (e.g. barco, tiro do oponente,
+tiro do jogador.
+ii. [ N ] Navio posicionado
+iii. [ 0 ] Posição do navio abatida
+iv. [ X ] Tiro inválido
+f) O programa deve ter uma função para o jogador poder Listar o tabuleiro.
+i. Em seu tabuleiro ele deve ver seus barcos, os tiros do oponente e os espaços em
+branco.
+ii. No tabuleiro do adversário deve ver seus tiros certeiros e seus tiros errados
+g) O programa deve ter a função para o jogador atirar, onde ele deve escolher uma célula da
+matriz para jogar.
+h) Cada jogador joga uma vez, depois é a vez do oponente.
+i) Vence o jogador que acertar todos os navios do oponente primeiro.
