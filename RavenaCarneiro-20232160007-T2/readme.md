@@ -31,7 +31,7 @@ Para compilar o projeto, siga os passos abaixo:
 
     Navegue até o diretório do projeto:
 
-    cd trabalho2/
+    cd RavenaCarneiro-20232160007-T2/
 
 Execute o comando de compilação:
 
