@@ -17,52 +17,67 @@
 
         return aux;
     }
-        void carregarDados(const char *trabalho2){
-        FILE *arquivo = fopen(trabalho2,"rb");
-        if(arquivo == NULL){
-          printf("Erro ao abrir o aquivo para carregar o arquivo\n");
-          return;
-        } 
-        for(int i = 0; i < TAM, i++){
-            int tam;
-            fread(&tam,sizeof(int),1,arquivo);
-            if(tam >0){
+void carregarDados(const char *trabalho2) {
+    FILE *arquivo = fopen("mainTeste.c", "r"); // Usando modo "r" para ler texto
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para carregar os dados\n");
+        return;
+    }
+    for (int i = 0; i < TAM; i++) {
+        int tam;
+        fscanf(arquivo, "%d", &tam); // Lendo o tamanho da estrutura
+        if (tam > 0) {
             vetorPrincipal[i] = criarEstruturaAux(tam);
-            if(vetorPrincipal[i] == NULL){
-                printf("Erro ao alocar memoria para estrutura auxiliar!\n");
+            if (vetorPrincipal[i] == NULL) {
+                printf("Erro ao alocar memória para estrutura auxiliar!\n");
                 fclose(arquivo);
                 return;
-                }
-             fread(vetorPrincipal[i] -> vetor,sizeof(int),tam,arquivo);
-             vetorPrincipal[i]->pos=tam-1;
-            }else{
-                vetorPrincipal[i] = NULL;
             }
-        
+            for (int j = 0; j < tam; j++) {
+                fscanf(arquivo, "%d", &vetorPrincipal[i]->vetor[j]); // Lendo os valores
+            }
+            vetorPrincipal[i]->pos = tam - 1;
+        } else {
+            vetorPrincipal[i] = NULL;
         }
-        fclose(arquivo);
-        printf("Dados carregados com sucesso")
+    }
+    fclose(arquivo);
+    printf("Dados carregados com sucesso\n");
+}
+
+void salvarDados(const char *trabalho2) {
+    FILE *arquivo = fopen("saida.txt", "w"); // Usando modo "w" para salvar texto
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para salvar os dados\n");
+        return;
     }
 
-    void salvarDados(cons char *trabalho2){
-        FILE *arquivo = fopen(trabalho2,"wb");
-        if(arquivo == NULL){
-            printf("Erro ao abrir o arquivo\n");
-            return;
-        }
-        for(int i =0; i < TAM;i++){
-            if(vetorPrincipal[i] != NULL){
-              fwrite(&vetorPrincipal[i]-> tam,sizeof(int),1,arquivo);
-              fwrite(vetorPrincipal[i]->vetor,sizeof(int, vetorPrincipal[i]->pos +1,arquivo));
-            }else{
-                int tam =0;
-                fwrite(tam,sizeof(int),1,arquivo);
-
+    // Salvar dados do vetor principal
+    for (int i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i] != NULL) {
+            fprintf(arquivo, "Vetor Principal %d: ", i + 1);
+            fprintf(arquivo, "%d ", vetorPrincipal[i]->tam); // Salvando tamanho
+            for (int j = 0; j <= vetorPrincipal[i]->pos; j++) {
+                fprintf(arquivo, "%d ", vetorPrincipal[i]->vetor[j]); // Salvando os valores
             }
+            fprintf(arquivo, "\n");
         }
-        fclose(arquivo);
     }
 
+    // Salvar dados das estruturas auxiliares
+    for (int i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i] != NULL) {
+            EstruturaAuxiliar *aux = vetorPrincipal[i];
+            for (int j = 0; j <= aux->pos; j++) {
+                // Salvando os valores e a posição de início para cada estrutura auxiliar
+                fprintf(arquivo, "Estrutura Auxiliar %d - Valor: %d, Posição: %d\n", i + 1, aux->vetor[j], j);
+            }
+        }
+    }
+
+    fclose(arquivo);
+    printf("Dados salvos com sucesso\n");
+}
 
     void destruirEstruturaAuxiliar(EstruturaAuxiliar *aux){
     if(  aux!= NULL){

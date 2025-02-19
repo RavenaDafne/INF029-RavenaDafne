@@ -1,0 +1,13 @@
+Vetor Principal 2: 4 3 4 -2 6 
+Vetor Principal 5: 10 1 34 12 6 27 -6 
+Vetor Principal 9: 3 
+Estrutura Auxiliar 2 - Valor: 3, Posição: 0
+Estrutura Auxiliar 2 - Valor: 4, Posição: 1
+Estrutura Auxiliar 2 - Valor: -2, Posição: 2
+Estrutura Auxiliar 2 - Valor: 6, Posição: 3
+Estrutura Auxiliar 5 - Valor: 1, Posição: 0
+Estrutura Auxiliar 5 - Valor: 34, Posição: 1
+Estrutura Auxiliar 5 - Valor: 12, Posição: 2
+Estrutura Auxiliar 5 - Valor: 6, Posição: 3
+Estrutura Auxiliar 5 - Valor: 27, Posição: 4
+Estrutura Auxiliar 5 - Valor: -6, Posição: 5
