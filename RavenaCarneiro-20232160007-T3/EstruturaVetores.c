@@ -1,5 +1,6 @@
     #include <stdio.h>
     #include <stdlib.h>
+    #include <string.h>
     #define TAM 10
 
     #include "EstruturaVetores.h"
@@ -17,59 +18,68 @@
 
         return aux;
     }
-void carregarDados(const char *trabalho2) {
-    FILE *arquivo = fopen("mainTeste.c", "r"); // Usando modo "r" para ler texto
+void carregarDados(const char *arquivoNome) {
+    FILE *arquivo = fopen(arquivoNome, "r");
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo para carregar os dados\n");
+        printf("Erro ao abrir %s para carregar os dados\n", arquivoNome);
         return;
     }
-    for (int i = 0; i < TAM; i++) {
-        int tam;
-        fscanf(arquivo, "%d", &tam); // Lendo o tamanho da estrutura
-        if (tam > 0) {
-            vetorPrincipal[i] = criarEstruturaAux(tam);
-            if (vetorPrincipal[i] == NULL) {
+
+    char linha[100];
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        int indice, tam;
+        if (sscanf(linha, "Vetor Principal %d: %d", &indice, &tam) == 2) {
+            if (indice < 1 || indice > TAM) continue;
+
+            vetorPrincipal[indice - 1] = criarEstruturaAux(tam);
+            if (vetorPrincipal[indice - 1] == NULL) {
                 printf("Erro ao alocar memória para estrutura auxiliar!\n");
                 fclose(arquivo);
                 return;
             }
-            for (int j = 0; j < tam; j++) {
-                fscanf(arquivo, "%d", &vetorPrincipal[i]->vetor[j]); // Lendo os valores
+
+            int *vetor = vetorPrincipal[indice - 1]->vetor;
+            vetorPrincipal[indice - 1]->pos = tam - 1;
+
+            for (int i = 0; i < tam; i++) {
+                fscanf(arquivo, "%d", &vetor[i]);
             }
-            vetorPrincipal[i]->pos = tam - 1;
-        } else {
-            vetorPrincipal[i] = NULL;
+        } else if (strstr(linha, "Estrutura Auxiliar") != NULL) {
+            int valor, posicao;
+            if (sscanf(linha, "Estrutura Auxiliar %d - Valor: %d, Posição: %d", &indice, &valor, &posicao) == 3) {
+                if (indice < 1 || indice > TAM) continue;
+                if (vetorPrincipal[indice - 1] != NULL && posicao < vetorPrincipal[indice - 1]->tam) {
+                    vetorPrincipal[indice - 1]->vetor[posicao] = valor;
+                }
+            }
         }
     }
+
     fclose(arquivo);
     printf("Dados carregados com sucesso\n");
 }
 
-void salvarDados(const char *trabalho2) {
-    FILE *arquivo = fopen("saida.txt", "w"); // Usando modo "w" para salvar texto
+void salvarDados(const char *arquivoNome) {
+    FILE *arquivo = fopen(arquivoNome, "w");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo para salvar os dados\n");
         return;
     }
 
-    // Salvar dados do vetor principal
     for (int i = 0; i < TAM; i++) {
         if (vetorPrincipal[i] != NULL) {
-            fprintf(arquivo, "Vetor Principal %d: ", i + 1);
-            fprintf(arquivo, "%d ", vetorPrincipal[i]->tam); // Salvando tamanho
+            fprintf(arquivo, "Vetor Principal %d: %d ", i + 1, vetorPrincipal[i]->tam);
             for (int j = 0; j <= vetorPrincipal[i]->pos; j++) {
-                fprintf(arquivo, "%d ", vetorPrincipal[i]->vetor[j]); // Salvando os valores
+                fprintf(arquivo, "%d ", vetorPrincipal[i]->vetor[j]);
             }
             fprintf(arquivo, "\n");
         }
     }
 
-    // Salvar dados das estruturas auxiliares
     for (int i = 0; i < TAM; i++) {
         if (vetorPrincipal[i] != NULL) {
             EstruturaAuxiliar *aux = vetorPrincipal[i];
             for (int j = 0; j <= aux->pos; j++) {
-                // Salvando os valores e a posição de início para cada estrutura auxiliar
                 fprintf(arquivo, "Estrutura Auxiliar %d - Valor: %d, Posição: %d\n", i + 1, aux->vetor[j], j);
             }
         }
@@ -78,15 +88,6 @@ void salvarDados(const char *trabalho2) {
     fclose(arquivo);
     printf("Dados salvos com sucesso\n");
 }
-
-    void destruirEstruturaAuxiliar(EstruturaAuxiliar *aux){
-    if(  aux!= NULL){
-        free(aux -> vetor);
-        free(aux);
-        }
-
-    }
-
     int checarVazia(EstruturaAuxiliar aux){
         return aux.pos == -1;
         }
@@ -109,7 +110,7 @@ void salvarDados(const char *trabalho2) {
     // se posição é um valor válido {entre 1 e 10}
     int ehPosicaoValida(int posicao){
         int retorno = 0;
-        if (posicao < 1 || posicao >= TAM)
+        if (posicao < 1 || posicao > TAM)
         {
             retorno = POSICAO_INVALIDA;
         }
@@ -123,32 +124,35 @@ void salvarDados(const char *trabalho2) {
             *x = *x * 2;
         }
     }
-    int criarEstruturaAuxiliar(int posicao, int tamanho){
-        //ajustando o indice
-        posicao --;
-        // validando tamanho
-        if (tamanho < 1) {
-            return TAMANHO_INVALIDO;
-        }
-
-        //validando posicao
-        if(posicao < 0 || posicao >= TAM){
-            return POSICAO_INVALIDA;
-        }
-
-        //verificando se ja tem estrutura auxiliar
-        if(vetorPrincipal[posicao] != NULL){
-            return JA_TEM_ESTRUTURA_AUXILIAR;
-        }
-        //aloca memoria pra estruturas auxiliares 
-        EstruturaAuxiliar *aux = criarEstruturaAux(tamanho);
-
-        if(aux == NULL){
-            return SEM_ESPACO_DE_MEMORIA;
-        }
-        vetorPrincipal[posicao] = aux;
-        return vetorPrincipal[posicao] == NULL ? SEM_ESPACO_DE_MEMORIA : SUCESSO;
+int criarEstruturaAuxiliar(int posicao, int tamanho){
+    // Ajustando o índice
+    posicao--;
+    
+    // Validando o tamanho
+    if (tamanho < 1) {
+        return TAMANHO_INVALIDO;
     }
+
+    if(posicao < 0 || posicao >= TAM){
+        return POSICAO_INVALIDA;
+    }
+
+    // Verificando se já existe estrutura auxiliar
+    if(vetorPrincipal[posicao] != NULL){
+        return JA_TEM_ESTRUTURA_AUXILIAR;
+    }
+
+    // Criar a estrutura auxiliar com o tamanho necessário
+    EstruturaAuxiliar *aux = criarEstruturaAux(tamanho);
+    if(aux == NULL) {
+        return SEM_ESPACO_DE_MEMORIA;
+    }
+
+    // Alocando a estrutura auxiliar na posição correta
+    vetorPrincipal[posicao] = aux;
+    
+    return vetorPrincipal[posicao] == NULL ? SEM_ESPACO_DE_MEMORIA : SUCESSO;
+}
 
     /*
     Objetivo: inserir número 'valor' em estrutura auxiliar da posição 'posicao'
@@ -161,7 +165,7 @@ void salvarDados(const char *trabalho2) {
     */
     int inserirNumeroEmEstrutura(int posicao, int valor){
         posicao --;
-        if(posicao < 0 || posicao >= TAM ){
+        if(posicao < 0 || posicao > TAM ){
         return POSICAO_INVALIDA;
         }
         
@@ -197,7 +201,7 @@ void salvarDados(const char *trabalho2) {
         //ajustar a posicao do vetor
         posicao --;
         EstruturaAuxiliar *aux =  vetorPrincipal[posicao];
-        if(posicao < 0 || posicao >= TAM ){
+        if(posicao < 0 || posicao > TAM ){
         return POSICAO_INVALIDA;
         }
 
@@ -229,7 +233,7 @@ void salvarDados(const char *trabalho2) {
     int excluirNumeroEspecificoDeEstrutura(int posicao, int valor){
         posicao --;
         EstruturaAuxiliar *aux =  vetorPrincipal[posicao];
-        if(posicao < 0 || posicao >= TAM ){
+        if(posicao < 0 || posicao > TAM ){
         return POSICAO_INVALIDA;
         }
 
@@ -267,23 +271,27 @@ void salvarDados(const char *trabalho2) {
         SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
         POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
     */
-    int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
-    posicao --;
-    if(posicao < 0 || posicao >= TAM) {
-            return POSICAO_INVALIDA;
-        }
-        EstruturaAuxiliar *aux =  vetorPrincipal[posicao];
+int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]) {
+    posicao--;  
+    if (posicao < 0 || posicao >= TAM) {  
+        return POSICAO_INVALIDA;
+    }
+    
+    EstruturaAuxiliar *aux = vetorPrincipal[posicao];
+    if (aux == NULL) {
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
 
-    if(aux == NULL){
-            return SEM_ESTRUTURA_AUXILIAR;
+    if (aux->pos < 0) { 
+        return ESTRUTURA_AUXILIAR_VAZIA;
     }
-        int i = 0;
-        while( i <= aux-> pos){
-        vetorAux[i]  =  aux->vetor[i];
-        i++;
-        }
-        return SUCESSO;
+
+    for (int i = 0; i <= aux->pos; i++) { 
+        vetorAux[i] = aux->vetor[i];
     }
+
+    return SUCESSO;
+}
 
 
     /*
@@ -386,7 +394,7 @@ void salvarDados(const char *trabalho2) {
     */
     int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
         
-        if(posicao < 1 || posicao >= TAM){
+        if(posicao < 1 || posicao > TAM){
             return POSICAO_INVALIDA;
         }
         posicao --;
@@ -430,7 +438,7 @@ void salvarDados(const char *trabalho2) {
     int getQuantidadeElementosEstruturaAuxiliar(int posicao){
     posicao --;
     EstruturaAuxiliar *aux =  vetorPrincipal[posicao];
-        if(posicao <= 0 || posicao >= TAM){
+        if(posicao <= 0 || posicao > TAM){
             return POSICAO_INVALIDA;
         }
         if(aux== NULL){
@@ -531,13 +539,32 @@ void salvarDados(const char *trabalho2) {
     para poder liberar todos os espaços de memória das estruturas auxiliares.
 
     */
+void imprimirEstruturas() {
+    for (int i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i] != NULL) {
+            EstruturaAuxiliar *aux = vetorPrincipal[i];
+            printf("Estrutura Auxiliar na posição %d:\n", i + 1);
+            if (checarVazia(*aux)) {
+                printf("Estrutura vazia.\n");
+            } else {
+                printf("Dados: ");
+                for (int j = 0; j <= aux->pos; j++) {
+                    printf("%d ", aux->vetor[j]);
+                }
+                printf("\n");
+            }
+        } else {
+            printf("Posição %d: Não há estrutura auxiliar.\n", i + 1);
+        }
+    }
+}
 
     void finalizar() {
         for (int i = 0; i < TAM; i++) {
             if (vetorPrincipal[i] != NULL) {
-                free(vetorPrincipal[i]->vetor);  // Libera o vetor auxiliar
-                free(vetorPrincipal[i]);        // Libera a estrutura auxiliar
-                vetorPrincipal[i] = NULL;       // Evita acessos inválidos
+                free(vetorPrincipal[i]->vetor);  
+                free(vetorPrincipal[i]);        
+                vetorPrincipal[i] = NULL;       
             }
         }
     }
