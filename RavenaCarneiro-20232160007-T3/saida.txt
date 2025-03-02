@@ -1,6 +1,6 @@
-Vetor Principal 2: 8 1 40 
-Vetor Principal 5: 4 60 -6 -7 
-Vetor Principal 7: 6 5 9 32 
+Vetor Principal, pos 2: tamanho: 8 lotacao: 1
+Vetor Principal, pos 5: tamanho: 4 lotacao: 2
+Vetor Principal, pos 7: tamanho: 6 lotacao: 2
 Estrutura Auxiliar 2 - Valor: 1, Posição: 0
 Estrutura Auxiliar 2 - Valor: 40, Posição: 1
 Estrutura Auxiliar 5 - Valor: 60, Posição: 0

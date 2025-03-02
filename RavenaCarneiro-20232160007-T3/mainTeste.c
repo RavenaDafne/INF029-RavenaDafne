@@ -22,7 +22,7 @@ void testarArquivoSegundaVez();
 int main()
 {
     inicializar();
-    //testarArquivoPrimeiraVez();
+    // testarArquivoPrimeiraVez();
     testarArquivoSegundaVez();
     /*testeInserirSemNada();
     testeCriarEstrutura();

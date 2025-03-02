@@ -1,23 +1,24 @@
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-    #define TAM 10
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define TAM 10
 
-    #include "EstruturaVetores.h"
-    //Estrutura principal, o qual atende 
-    EstruturaAuxiliar *vetorPrincipal[TAM] = {NULL};
+#include "EstruturaVetores.h"
+//Estrutura principal, o qual atende 
+EstruturaAuxiliar *vetorPrincipal[TAM] = {NULL};
 
-    EstruturaAuxiliar *criarEstruturaAux(int tam){
-        EstruturaAuxiliar *aux = malloc(sizeof(EstruturaAuxiliar));
-        if(aux ==  NULL){
-            return NULL;
-        }
-        aux -> vetor =  malloc(tam * sizeof(int));
-        aux -> pos =-1;
-        aux -> tam = tam;
-
-        return aux;
+EstruturaAuxiliar *criarEstruturaAux(int tam){
+    EstruturaAuxiliar *aux = malloc(sizeof(EstruturaAuxiliar));
+    if(aux ==  NULL){
+        return NULL;
     }
+    aux -> vetor =  malloc(tam * sizeof(int));
+    aux -> pos =-1;
+    aux -> tam = tam;
+
+    return aux;
+}
+
 void carregarDados(const char *arquivoNome) {
     FILE *arquivo = fopen(arquivoNome, "r");
     if (arquivo == NULL) {
@@ -27,32 +28,28 @@ void carregarDados(const char *arquivoNome) {
 
     char linha[100];
     while (fgets(linha, sizeof(linha), arquivo)) {
-        int indice, tam;
-        if (sscanf(linha, "Vetor Principal %d: %d", &indice, &tam) == 2) {
+        int indice, tam, pos, valor;
+        if (sscanf(linha, "Vetor Principal, pos %d: tamanho: %d lotacao: %d", &indice, &tam, &pos) == 3) {
             if (indice < 1 || indice > TAM) continue;
 
-            vetorPrincipal[indice - 1] = criarEstruturaAux(tam);
-            if (vetorPrincipal[indice - 1] == NULL) {
+            //vetorPrincipal[indice - 1]
+            EstruturaAuxiliar *estrutura = criarEstruturaAux(tam);
+            if (estrutura == NULL) {
                 printf("Erro ao alocar memória para estrutura auxiliar!\n");
                 fclose(arquivo);
                 return;
             }
-
-            int *vetor = vetorPrincipal[indice - 1]->vetor;
-            vetorPrincipal[indice - 1]->pos = tam - 1;
-
-            for (int i = 0; i < tam; i++) {
-                fscanf(arquivo, "%d", &vetor[i]);
-            }
-        } else if (strstr(linha, "Estrutura Auxiliar") != NULL) {
-            int valor, posicao;
-            if (sscanf(linha, "Estrutura Auxiliar %d - Valor: %d, Posição: %d", &indice, &valor, &posicao) == 3) {
-                if (indice < 1 || indice > TAM) continue;
-                if (vetorPrincipal[indice - 1] != NULL && posicao < vetorPrincipal[indice - 1]->tam) {
-                    vetorPrincipal[indice - 1]->vetor[posicao] = valor;
-                }
+            estrutura->pos = pos;
+            estrutura->tam = tam;
+            
+            vetorPrincipal[indice - 1] = estrutura;
+        } else if (sscanf(linha, "Estrutura Auxiliar %d - Valor: %d, Posição: %d", &indice, &valor, &pos) == 3) {
+            if (indice < 1 || indice > TAM) continue;
+            if (vetorPrincipal[indice - 1] != NULL && pos <= vetorPrincipal[indice - 1]->tam) {
+                vetorPrincipal[indice - 1]->vetor[pos] = valor;
             }
         }
+        
     }
 
     fclose(arquivo);
@@ -68,11 +65,7 @@ void salvarDados(const char *arquivoNome) {
 
     for (int i = 0; i < TAM; i++) {
         if (vetorPrincipal[i] != NULL) {
-            fprintf(arquivo, "Vetor Principal %d: %d ", i + 1, vetorPrincipal[i]->tam);
-            for (int j = 0; j <= vetorPrincipal[i]->pos; j++) {
-                fprintf(arquivo, "%d ", vetorPrincipal[i]->vetor[j]);
-            }
-            fprintf(arquivo, "\n");
+            fprintf(arquivo, "Vetor Principal, pos %d: tamanho: %d lotacao: %d\n", i + 1, vetorPrincipal[i]->tam, vetorPrincipal[i]->pos);
         }
     }
 
